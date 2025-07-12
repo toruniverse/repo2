@@ -8,15 +8,11 @@
     html, body {
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
       background: #0d0d0d;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #00ffff;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-
-    body, html {
-      height: 100%;
     }
 
     #particles-js {
@@ -24,8 +20,11 @@
       top: 0;
       left: 0;
       width: 100%;
+      height: 100%;
       min-height: 100vh;
       z-index: 0;
+      pointer-events: auto;
+      overflow: hidden;
     }
 
     .container {
@@ -135,12 +134,12 @@
   <!-- Load Particles.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-  <!-- Particles Initialization -->
+  <!-- Particle Config and Form Logic -->
   <script>
     function initParticles() {
       particlesJS("particles-js", {
         particles: {
-          number: { value: 80 },
+          number: { value: 160 }, // increase if you want more particles
           color: { value: "#00ffff" },
           shape: { type: "circle" },
           opacity: { value: 0.5 },
@@ -155,7 +154,7 @@
           move: { enable: true, speed: 2 }
         },
         interactivity: {
-          detect_on: "window", // ← FIX: now tracks full window, not just canvas
+          detect_on: "window", // this ensures full-page mouse tracking
           events: {
             onhover: { enable: true, mode: "repulse" },
             onclick: { enable: true, mode: "push" }
@@ -175,7 +174,7 @@
 
       setTimeout(() => {
         wrapper.scrollIntoView({ behavior: 'smooth' });
-        resizeParticlesCanvas(); // make sure canvas matches new height
+        resizeParticlesCanvas(); // match new height
       }, 400);
     }
 
@@ -187,7 +186,6 @@
       }
     }
 
-    // Initialize particles on load and update canvas size
     window.addEventListener("load", () => {
       initParticles();
       setTimeout(resizeParticlesCanvas, 500);
