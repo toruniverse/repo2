@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>evolugia.com</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0d0d0d;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #00ffff;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100vh;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ffff88;
+      margin-bottom: 1rem;
+    }
+
+    .contact-button {
+      background-color: #00ffff;
+      color: #000;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffff80;
+      transition: background 0.3s;
+    }
+
+    .contact-button:hover {
+      background-color: #0ffb;
+    }
+
+    #contact-form-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-out, padding 0.3s ease;
+      padding: 0;
+      width: 100%;
+    }
+
+    #contact-form-wrapper.open {
+      max-height: 1000px;
+      padding: 2rem 0;
+    }
+
+    form {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid #00ffff88;
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 20px #00ffff44;
+    }
+
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    form input, form textarea {
+      background: #111;
+      color: #0ff;
+      border: 1px solid #0ff4;
+    }
+
+    form button {
+      background-color: #00ffff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #0ffb;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <div class="container">
+    <h1>This domain is for sale</h1>
+    <button class="contact-button" onclick="showForm()">Contact Us</button>
+
+    <div id="contact-form-wrapper">
+      <form action="https://formspree.io/f/xyzjragr" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Load Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <!-- Particles Initialization -->
+  <script>
+    function initParticles() {
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 80 },
+          color: { value: "#00ffff" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5 },
+          size: { value: 3 },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#00ffff",
+            opacity: 0.4,
+            width: 1
+          },
+          move: { enable: true, speed: 2 }
+        },
+        interactivity: {
+          detect_on: "window", // ← FIX: now tracks full window, not just canvas
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" }
+          },
+          modes: {
+            repulse: { distance: 100 },
+            push: { particles_nb: 4 }
+          }
+        },
+        retina_detect: true
+      });
+    }
+
+    function showForm() {
+      const wrapper = document.getElementById("contact-form-wrapper");
+      wrapper.classList.add("open");
+
+      setTimeout(() => {
+        wrapper.scrollIntoView({ behavior: 'smooth' });
+        resizeParticlesCanvas(); // make sure canvas matches new height
+      }, 400);
+    }
+
+    function resizeParticlesCanvas() {
+      const canvas = document.querySelector("#particles-js canvas");
+      if (canvas) {
+        canvas.style.width = "100%";
+        canvas.style.height = document.body.scrollHeight + "px";
+      }
+    }
+
+    // Initialize particles on load and update canvas size
+    window.addEventListener("load", () => {
+      initParticles();
+      setTimeout(resizeParticlesCanvas, 500);
+    });
+
+    window.addEventListener("resize", resizeParticlesCanvas);
+  </script>
+</body>
+</html>
